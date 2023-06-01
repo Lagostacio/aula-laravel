@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Produto;
 use Illuminate\Http\Request;
 
 class ProdutosController extends Controller
 {
     public function index(){
-        return view('produtos.index');
+
+        $prods = Produto::all();
+
+        return view('produtos.index',[
+            'prods' => $prods,
+        ]);
     }
 
     public function add(){
@@ -15,7 +21,11 @@ class ProdutosController extends Controller
     }
 
     public function addSave(Request $form){
-        dd($form);
+
+        Produto::create($form->toArray());
+
+        return redirect()->route('produtos');
+
     }
 
     public function view(){

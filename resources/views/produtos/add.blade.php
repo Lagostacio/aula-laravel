@@ -7,9 +7,9 @@
 
     <form action="{{ route('produtos.addSave') }}" method='post'>
         @csrf
-        Nome: <input type="text" name="name" id=""><br>
-        Preço: <input type="number" name="price" id="" step='0.01'><br>
-        Quantidade: <input type="number" name="quantity" id="">
+        <input type="text" name="name" id="" placeholder="Nome do Produto"><br>
+        <input type="number" name="price" id="" step='0.01' placeholder="Preço" min='0'><br>
+        <input type="number" name="quantity" id="" placeholder="Quantidade">
         <hr width='15%' color='purple' align='left'>
         <input type="submit" value="Gravar">
     </form>
