@@ -15,7 +15,7 @@
         <tbody>
             @foreach ($prods as $p)
             <tr>
-                <td>{{$p->name}}</td>
+                <td><a href='{{ route('produtos.view',$p->id)}}'>{{$p->name}}</a></td>
                 <td>R${{ number_format($p->price, 2, ',')}}</td>
                 <td>{{$p->quantity}}</td>
             </tr>
