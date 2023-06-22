@@ -8,8 +8,21 @@ use Illuminate\Validation\Rule;
 
 class ProdutosController extends Controller
 {
-    public function index() {
-        $prods = Produto::all();
+    public function index(Request $req)
+    {
+
+        if ($req->isMethod('POST')) {
+            $busca = $req->busca;
+
+            $ord = $req->ord == 'asc' ? 'asc' : 'desc';
+
+            $prods = Produto::where('name', 'LIKE', "%{$busca}%")
+                ->orderBy('name', $ord)->get();
+
+        } else {
+            $prods = Produto::all();
+        }
+
 
         # Busca tudo com apagados
         # $prods = Produto::withTrashed()->get();
@@ -22,11 +35,13 @@ class ProdutosController extends Controller
         ]);
     }
 
-    public function add() {
+    public function add()
+    {
         return view('produtos.add');
     }
 
-    public function addSave(Request $form) {
+    public function addSave(Request $form)
+    {
         $dados = $form->validate([
             'name' => 'required|unique:produtos|min:3',
             'price' => 'required|numeric|gte:0',
@@ -38,14 +53,16 @@ class ProdutosController extends Controller
         return redirect()->route('produtos')->with('sucesso', 'Produto inserido com sucesso');
     }
 
-    public function edit(Produto $produto) {
+    public function edit(Produto $produto)
+    {
         // Usamos a mesma view do "add"
         return view('produtos.add', [
             'prod' => $produto,
         ]);
     }
 
-    public function editSave(Request $form, Produto $produto) {
+    public function editSave(Request $form, Produto $produto)
+    {
         $dados = $form->validate([
             'name' => [
                 'required',
@@ -61,19 +78,22 @@ class ProdutosController extends Controller
         return redirect()->route('produtos')->with('sucesso', 'Produto alterado com sucesso');
     }
 
-    public function view(Produto $produto) {
+    public function view(Produto $produto)
+    {
         return view('produtos.view', [
             'prod' => $produto,
         ]);
     }
 
-    public function delete(Produto $produto) {
+    public function delete(Produto $produto)
+    {
         return view('produtos.delete', [
             'prod' => $produto,
         ]);
     }
 
-    public function deleteForReal(Produto $produto) {
+    public function deleteForReal(Produto $produto)
+    {
         $produto->delete();
 
         return redirect()->route('produtos')->with('sucesso', 'Produto apagado com sucesso!');
