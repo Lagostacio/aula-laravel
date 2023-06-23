@@ -17,10 +17,10 @@ class ProdutosController extends Controller
             $ord = $req->ord == 'asc' ? 'asc' : 'desc';
 
             $prods = Produto::where('name', 'LIKE', "%{$busca}%")
-                ->orderBy('name', $ord)->get();
+                ->orderBy('name', $ord)->paginate(15);
 
         } else {
-            $prods = Produto::all();
+            $prods = Produto::paginate();
         }
 
 
