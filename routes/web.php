@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProdutosController;
+use App\Http\Controllers\UsuariosController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,3 +37,14 @@ Route::post('/produtos/edit/{produto}', [ProdutosController::class, 'editSave'])
 Route::get('/produtos/delete/{produto}', [ProdutosController::class, 'delete'])->name('produtos.delete');
 
 Route::delete('/produtos/delete/{produto}', [ProdutosController::class, 'deleteForReal'])->name('produtos.deleteForReal');
+
+
+Route::get('/usuarios',[UsuariosController::class, 'index'])->name('usuarios');
+
+Route::get('/usuarios/add',[UsuariosController::class, 'add'])->name('usuarios.add');
+
+Route::post('/usuarios/add',[UsuariosController::class, 'addSave'])->name('usuarios.addSave');
+
+Route::get('/usuarios/delete/{usuario}',[UsuariosController::class, 'delete'])->name('usuarios.delete');
+
+Route::delete('/usuarios/delete/{usuario}', [UsuariosController::class, 'deleteForReal'])->name('usuarios.deleteForReal');
