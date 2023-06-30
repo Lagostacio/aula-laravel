@@ -10,6 +10,16 @@
 <body>
 
     <h1>Site Lindão</h1>
+    {{-- usuario autenticado --}}
+    <div>
+        @if (Auth::user())
+            Olá {{ Auth::user()->name }}
+            <br>
+            <a href="{{ route('logout') }}">10logar</a>
+        @else
+            <a href="{{ route('login') }}">Fazer login</a>
+        @endif
+    </div>
     <hr>
 
     @yield('content')

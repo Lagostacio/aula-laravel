@@ -19,32 +19,48 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/produtos', [ProdutosController::class, 'index'])->name('produtos');
-
-Route::post('/produtos',[ProdutosController::class, 'index']);
+Route::prefix('/produtos')->middleware('auth')->group(function(){
 
 
-Route::get('/produtos/add', [ProdutosController::class, 'add'])->name('produtos.add');
+    Route::get('', [ProdutosController::class, 'index'])->name('produtos');
 
-Route::post('/produtos/add', [ProdutosController::class, 'addSave'])->name('produtos.addSave');
+    Route::post('',[ProdutosController::class, 'index']);
 
-Route::get('/produtos/{produto}', [ProdutosController::class, 'view'])->name('produtos.view');
+    Route::get('/add', [ProdutosController::class, 'add'])->name('produtos.add');
 
-Route::get('/produtos/edit/{produto}', [ProdutosController::class, 'edit'])->name('produtos.edit');
+    Route::post('/add', [ProdutosController::class, 'addSave'])->name('produtos.addSave');
 
-Route::post('/produtos/edit/{produto}', [ProdutosController::class, 'editSave'])->name('produtos.editSave');
+    Route::get('/{produto}', [ProdutosController::class, 'view'])->name('produtos.view');
 
-Route::get('/produtos/delete/{produto}', [ProdutosController::class, 'delete'])->name('produtos.delete');
+    Route::get('/edit/{produto}', [ProdutosController::class, 'edit'])->name('produtos.edit');
 
-Route::delete('/produtos/delete/{produto}', [ProdutosController::class, 'deleteForReal'])->name('produtos.deleteForReal');
+    Route::post('/edit/{produto}', [ProdutosController::class, 'editSave'])->name('produtos.editSave');
+
+    Route::get('/delete/{produto}', [ProdutosController::class, 'delete'])->name('produtos.delete');
+
+    Route::delete('/delete/{produto}', [ProdutosController::class, 'deleteForReal'])->name('produtos.deleteForReal');
+
+});
+
+Route::prefix('/usuarios')->middleware('auth')->group(function (){
 
 
-Route::get('/usuarios',[UsuariosController::class, 'index'])->name('usuarios');
+    Route::get('',[UsuariosController::class, 'index'])->name('usuarios');
 
-Route::get('/usuarios/add',[UsuariosController::class, 'add'])->name('usuarios.add');
+    Route::get('/add',[UsuariosController::class, 'add'])->name('usuarios.add');
 
-Route::post('/usuarios/add',[UsuariosController::class, 'addSave'])->name('usuarios.addSave');
+    Route::post('/add',[UsuariosController::class, 'addSave'])->name('usuarios.addSave');
 
-Route::get('/usuarios/delete/{usuario}',[UsuariosController::class, 'delete'])->name('usuarios.delete');
+    Route::get('/delete/{usuario}',[UsuariosController::class, 'delete'])->name('usuarios.delete');
 
-Route::delete('/usuarios/delete/{usuario}', [UsuariosController::class, 'deleteForReal'])->name('usuarios.deleteForReal');
+    Route::delete('/delete/{usuario}', [UsuariosController::class, 'deleteForReal'])->name('usuarios.deleteForReal');
+
+});
+
+
+Route::get('/login',[UsuariosController::class, 'login'])->name('login');
+
+Route::post('/login',[UsuariosController::class, 'login']);
+
+Route::get('/logout',[UsuariosController::class, 'logout'])->name('logout');
+
