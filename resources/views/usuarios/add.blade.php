@@ -2,6 +2,12 @@
 
 @section('content')
 
+@if ($errors)
+    @foreach ($errors->all() as $err)
+        {{ $err }}<br>
+    @endforeach
+@endif
+
 <h1>add usuarios</h1>
 
 <form action="{{route('usuarios.addSave')}}" method='POST'>

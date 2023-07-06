@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Usuario;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -33,7 +34,10 @@ class UsuariosController extends Controller
         ]);
 
         $dados['password'] = Hash::make($dados['password']);
-        Usuario::create($dados);
+
+        $user = Usuario::create($dados);
+
+        event(new Registered($user));
 
         return redirect()->route('usuarios');
     }
@@ -64,7 +68,7 @@ class UsuariosController extends Controller
             ]);
 
             if (Auth::attempt($data)){
-                return redirect()->route('usuarios');
+                return redirect()->intended('usuarios');
             } else {
                 return redirect()->route('login')->with('erro','Deu ruim!');
             }
